@@ -1,0 +1,11 @@
+sudo: required
+services:
+  - docker
+
+#Avant de déployer notre projet ou executer les test
+before_install:  
+  - docker build -t cardin21/docker_k8 -f Dockerfile.dev .
+
+# with an exit code => build failed
+script: 
+  - docker run -e CI=true cardin21/docker_k8 npm run test
