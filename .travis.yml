@@ -9,3 +9,17 @@ before_install:
 # with an exit code => build failed
 script: 
   - docker run -e CI=true cardin21/docker_k8 npm run test
+
+deploy:
+  provider: elasticbeanstalk
+  region: "eu-west-1"
+  app: "docker-k8s"
+  env: "Docker-k8s-env"
+  bucket_name: "elasticbeanstalk-eu-west-1-679702184550"
+  bucket_path: "docker-k8s"
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY_ID 
+  secret_access_key: $AWS_SECRET_ACCESS_KEY
+
+  # http://docker-k8s-env.eba-psfinjgh.eu-west-1.elasticbeanstalk.com/
