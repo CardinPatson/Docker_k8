@@ -1,1 +1,47 @@
 1. Crétion du déploiement MongoDB
+
+2. Quest ce qu'un Namespace
+
+
+- organise ressources in namespace
+
+On peut avoir plusieurs namespace dans un cluster k8s (virtual cluster dans un cluster)
+ 
+On a 4 Namespace par défaut 
+- kube-node-lease (information sur les heartbeats des nodes: chaque node a un object lease dans un namespace et détermine l'availaility des node)
+- kube-public  (publicely accessible data, possède un configmap qui contient les informations du cluster)
+- kube-system (system processes, master and kubectl processes )
+- default (les ressources créer sont alloué ici)
+
+
+kubectl create namespace my-namespace
+
+création d'un namespace avec un fichier de configuration
+
+--
+apiVersion: v1
+kind: ConfigMap 
+metadata:
+    name: mysql-configmap 
+    namespace: my-namespace
+data:
+    db_url: mysql-service.database 
+
+Need of namespace (pas nécessaire pour de petite application pour des larges stack)
+ 
+ Par défaut on a 1 namespace (default) la ou on créer nos ressources si on crée toutes nos ressources à l'intérieur il sera rempli rapidement 
+ et sa sera difficile de voir ce qui est à l'intérieur
+
+ Database Namespace : Avec toutes les ressources liées à la base de données 
+ Monitoring Namespace :  Pour le monitoring des ressources 
+ Elastic Stack  : 
+ Nginx-ingress Namespace :
+
+Si on a plusieurs équipes on ne peut pas utiliser le même namespace
+
+
+configuration d'une regle ingress pour acceder au dashboard k8 
+
+kubectl get ns 
+
+kubectl get all -n kubernetes-dashboards 

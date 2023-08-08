@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: content-deployment
+spec:
+  replicas: 1
+  #the selector and the template work in combination :
+  # inside the template we define the pod and the container that we are going to use (whate we are deploying)
+  # inside the selector we selecting the template that we are going to use (selecting it fo us as part of deployment)
+  selector:
+    matchLabels:
+      app: contentservice
+  template:
+    metadata:
+      labels:
+        app: contentservice
+    spec:
+      containers:
+        - name: contentservice
+          image: unlymeet/contentservice:latest

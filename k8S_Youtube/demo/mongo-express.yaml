@@ -42,3 +42,25 @@ spec:
             configMapKeyRef:
               name:  mongodb-configmap
               key: database_url
+---
+#External service
+apiVersion: v1 
+kind: Service
+metadata:
+  name: mongo-express-service
+spec:
+  # To connect to the port via the label
+  selector:
+    app: mongo-express
+  type: LoadBalancer  # Un service interne agit aussi comme un load balancer (qui donne une adresse ip externe)
+  ports:
+    - protocol: TCP
+      port: 8081         # service port
+      targetPort: 8081   # container port
+      nodePort: 30000 # Port to put in the brower (30000 -  32767)
+
+# Un service externe 
+# type load balancer : il accepte des requetes externe en assignant une adresse ip externe au service
+# nodePort : Pour ou le service externe sera ouvert pour être accessible par le navigateur
+
+# Dans le service interne on ne mentionne pas de type, il aura par défaut le type clusterip

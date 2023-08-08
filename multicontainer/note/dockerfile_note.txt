@@ -1,0 +1,43 @@
+Application en react , express et un worker 
+# Focus sur la version de dev des dockerfile 
+
+nginx routing request to the frontend (host react code) and the backend to make http request to the api
+
+/index.html && /main.js ==> React server
+
+/values/all && /values/current ==> express server (client need to make request to /api/values/all and /api/values/current )
+
+On met en place un conteneur qui va démarrer un service nginx qui regarde la requete entrante (si elle a un /api on redirige vers Express server sinon vers react app)
+
+pour la configuration des règles de nginx on la fera dans le fichier default.conf
+
+- Dit a nginx quon a un server upstream sur le client:3000
+- Dit a nginx qu'on a un server upstream sur le server:5000
+
+- Ecoute sur le port 80 (à l'intérieur du conteneur)
+- Si quelqu'un vient sur / redirige la requete vers le client
+- Si quelqu'un vient sur /api redirige la requete vers le server
+
+
+-- configuration
+
+upstream client {
+    server client: 3000;
+}
+
+upstream server {
+    server api: 5000;
+}
+
+server {
+    listen 80;
+
+    location / {
+        proxy_pass http://client;  // le nom du service dans le docker compose
+    }
+
+    location /api {
+        rewrite /api/(.*) /$1 break;  // $1 récupère ce qui match le (.*) et le break permet de stoper le regex la 
+        proxy_pass http://api;
+    }
+}
