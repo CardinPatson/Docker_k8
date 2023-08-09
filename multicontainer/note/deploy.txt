@@ -1,0 +1,34 @@
+Deploy the multicontainer app to elasticbean staks
+
+flow for one container
+----------------------
+
+push code to github -> travis pull repo -> travis builds image and tests code -> travis pushes code to aws eb -> eb builds images and deploy it 
+
+
+Flow from multicontainers
+-------------------------
+
+(1)Push code to github -> (2)Travis pull the repo -> (3)travis build a test image, tests code -> (4)travis builds prod images -> 
+
+(5)travis pushed build prod images to docker ub -> (6)travis pushed project to aws eb -> (7)eb pulls image from docker hub and deploy 
+
+in this workfow we will replace travis by github action
+
+
+Architecture avec de multiple container 
+
+request from browser --> (port(80)Nginx (Routing) ----> port (3000) react server || port (5000) express server) eb
+
+
+pour le client nginx sur le port 3000
+
+server {
+  listen 3000;
+ 
+  location / {
+    root /usr/share/nginx/html; // la ou on met nos fichier de production
+    index index.html index.htm;
+    try_files $uri $uri/ /index.html;
+  }
+}
