@@ -1,0 +1,81 @@
+Master 
+
+On donne des directive au master qui intéragit avec les conteneur 
+
+k8s en dev et en prod
+----------------------
+
+Dev: Minikube : (kubectl) pour gérer les conteneur dans les nodes, (minikube) pour gérer les nodes(machines virtuelles) en local
+
+Prod : EKS ou AKS ou GKE
+
+2 type de driver pour minikube : docker et hyperkit
+
+- minikube start --driver=docker
+- minikube start --driver=hyperkit
+
+Kubernetes control plane is running at https://127.0.0.1:53695
+CoreDNS is running at https://127.0.0.1:53695/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+
+Chaque service dans le docker compose représente un conteneur que l'on doit créer et requiert un network (port)
+
+1. chaque image doit déjà être construite et prêt pour le déploiment -- on docker hub 
+2. un fichier de config par objet créer -- un fichier de config pour créer le conteneur
+3. on définit manuellement le networking -- un fichier de configu pour definir le networking
+
+image: stephengrider/multi-client
+
+Object dans k8s : statefulset, replicacontroller, pod, service(setup networking)
+
+Pod : node(pod(container1)) -- 
+
+les conteneurs dans un pod doivent avoir des tâches similaires ex: node(pod(postgres, logger, backup-manager))
+
+Service: (clusterip, nodeport, loadbalancer, ingress) 
+- nodeport: expose the container to the outside world -- only for dev purpose
+
+Navigator --> Kube-proxy ->  service nodeport -> pod(multi-client(3000))
+
+le selector dans le service a pour but de rechercher le pod qui est sur le ports en question (le mappage doit être le même sur le pod et le service)
+- le targetport est indentique au conteneur port
+
+pod qui a besoin du (multi-client pod) -> port (NodePort Service) 
+
+(NodePort Service) -> targetport (multi-client pod ) 
+
+kubectl apply -f <filename>
+
+port sur le service qui a été créer
+3050:31515/TCP
+
+allez sur localhost sur ce port ne fonctionnera pas : pourquoi : le kube-proxy qui est accessible via l'adresse de minikube
+(minikube ip)
+
+http://192.168.49.2:31515
+
+minikube service hello-minikube1 --url (to connect to the pod of )
+
+
+Deployment flow of k8s
+----------------------
+
+1. On donne les instructions la majeur partie du temps au master node
+Definition
+
+- kubernetes est une system pour déployer des app conteuneurisé
+- Node sont des machines individuels qui font tourner les conteneurs
+- Master est une machine avec un ensemble d'instruction pour gérer les nodes
+- kubernetes ne construit pas les images il l'est récupère sur un register
+- kubernetes décide de l'emplacement ou les conteneurs tournent, chaque node peut faire tourner un ensemble de conteneur non similaire
+- Pour déployer quelque chose on met a jour le status du master avec des fichiers de configuration
+- le master travaille à chaque instant pour atteindre le status désiré
+
+
+Maintenance d'un ensemble de conteneur avec des déploiment
+----------------------------------------------------------
+
+Le Name et le Kind dans un fichier de déploiement doivent être unique au déploiement 
+
+kubectl describe <object type> <object-name>
+
+limitation dans la mise à jour des config
