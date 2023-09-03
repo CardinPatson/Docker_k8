@@ -53,8 +53,18 @@ allez sur localhost sur ce port ne fonctionnera pas : pourquoi : le kube-proxy q
 
 http://192.168.49.2:31515
 
+Quand on utilise un service de type nodePort sur window on doit lancer cette commande pour acceder a notre conteneur
+
 minikube service hello-minikube1 --url (to connect to the pod of )
 
+
+Or quand on lance un service de type loadBalancer on doit lancer cette commande 
+
+minikube tunnel
+
+plus d'information sur ce lien https://minikube.sigs.k8s.io/docs/handbook/accessing/#using-minikube-service-with-tunnel
+
+Ce de type clusterIp ne sont pas directement accessible
 
 Deployment flow of k8s
 ----------------------
@@ -79,3 +89,7 @@ Le Name et le Kind dans un fichier de déploiement doivent être unique au dépl
 kubectl describe <object type> <object-name>
 
 limitation dans la mise à jour des config
+
+On est pas capable de mettre a jour toutes les parties du pod  comme les ports ou le name a l'aide de kubectl  
+
+Deployment : Fait tourner des pods identique, monitore l'état de chaque pod, bon pour le dev et la prod

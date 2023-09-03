@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-deployment
+spec:
+  # nombre de pods que l'on veut démarrer
+  replicas: 1
+  # si le master veut mettre à jour un pod, il recherchera les pods avec le label qui correspond à celui ci
+  selector:
+    matchLabels:
+      component: web
+  # template d'un pod qui contient des conteneurs similaire
+  template:
+    metadata:
+      labels:
+        component: web
+    spec:
+      containers:
+        - name: client
+          image: stephengrider/multi-client
+          ports:
+            - containerPort: 3000
