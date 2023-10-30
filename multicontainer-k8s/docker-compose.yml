@@ -1,0 +1,31 @@
+version: '3'
+services:
+  client:
+    image: 'rallycoding/multi-client'
+    mem_limit: 128m
+    hostname: client
+  server:
+    image: 'rallycoding/multi-server'
+    mem_limit: 128m
+    hostname: api
+    environment:
+      - REDIS_HOST=$REDIS_HOST
+      - REDIS_PORT=$REDIS_PORT
+      - PGUSER=$PGUSER
+      - PGHOST=$PGHOST
+      - PGDATABASE=$PGDATABASE
+      - PGPASSWORD=$PGPASSWORD
+      - PGPORT=$PGPORT
+  worker:
+    image: 'rallycoding/multi-worker'
+    mem_limit: 128m
+    hostname: worker
+    environment:
+      - REDIS_HOST=$REDIS_HOST
+      - REDIS_PORT=$REDIS_PORT
+  nginx:
+    image: 'rallycoding/multi-nginx'
+    mem_limit: 128m
+    hostname: nginx
+    ports:
+      - '80:80'

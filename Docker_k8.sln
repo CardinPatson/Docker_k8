@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.002.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "rabbit-dotnet", "rabbit-dotnet", "{A9A62F02-93CA-41B2-98C3-39B07BC20A54}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Receive", "rabbit-dotnet\Receive\Receive.csproj", "{87BE0496-3CD8-46D5-978B-98AD2C5ED662}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Send", "rabbit-dotnet\Send\Send.csproj", "{F81F022D-2333-47AF-B179-594C1DF2AE2C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{87BE0496-3CD8-46D5-978B-98AD2C5ED662}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87BE0496-3CD8-46D5-978B-98AD2C5ED662}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87BE0496-3CD8-46D5-978B-98AD2C5ED662}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87BE0496-3CD8-46D5-978B-98AD2C5ED662}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F81F022D-2333-47AF-B179-594C1DF2AE2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F81F022D-2333-47AF-B179-594C1DF2AE2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F81F022D-2333-47AF-B179-594C1DF2AE2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F81F022D-2333-47AF-B179-594C1DF2AE2C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{87BE0496-3CD8-46D5-978B-98AD2C5ED662} = {A9A62F02-93CA-41B2-98C3-39B07BC20A54}
+		{F81F022D-2333-47AF-B179-594C1DF2AE2C} = {A9A62F02-93CA-41B2-98C3-39B07BC20A54}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8D5FF556-466A-4E16-A7DC-CCE6AC8C2201}
+	EndGlobalSection
+EndGlobal

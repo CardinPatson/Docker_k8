@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  # this name can be use by other service to access the client : http://client-cluster-ip-service
+  name: client-cluster-ip-service
+spec:
+  type: ClusterIP
+  selector:
+    component: web
+  # ports: how other will join me (otherService -> (port)me) 
+  # targetPort: how i will join client pod (me(targetPort) -> otherService)
+  ports:
+    - port: 3000
+      targetPort: 3000
