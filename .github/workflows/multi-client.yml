@@ -1,0 +1,30 @@
+name: multi-client
+
+on:
+  workflow_dispatch:
+    push:
+      branches:
+      - master
+
+      paths:
+      - multicontainer-k8s/client
+      - .github/workflows/multi-client.yml
+
+env:
+  SERVICE: client
+  IMAGE: multi-client
+
+jobs:
+  BuildPushLinux:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    - uses: ./.github/workflows/composite
+      with:
+        service: ${{ env.SERVICE }}
+        image_name: ${{ env.IMAGE }}
+        registry_host: ${{ secrets.REGISTRY_HOST }}
+        registry_endpoint: ${{ secrets.DOCKER_REGISTRY }} #
+        registry_username: ${{ secrets.DOCKER_USERNAME }}
+        registry_password: ${{ secrets.DOCKER_PASSWORD }}

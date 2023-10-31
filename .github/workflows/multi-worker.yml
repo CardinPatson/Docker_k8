@@ -1,0 +1,30 @@
+name: multi-worker
+
+on:
+  workflow_dispatch:
+    push:
+      branches:
+      - master
+
+    paths:
+    - multicontainer-k8s/worker
+    - .github/workflows/multi-worker.yml
+
+env:
+  SERVICE: worker
+  IMAGE: multi-worker
+
+jobs:
+  BuildPushLinux:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: action/checkout@v3
+    - uses: ./.github/workflows/composite
+      with: 
+        service: ${{ env.SERVICE }}
+        image_name: ${{ env.IMAGE }}
+        registry_host: ${{ secrets.REGISTRY_HOST }}
+        registry_endpoint: ${{ secrets.DOCKER_REGISTRY }} #
+        registry_username: ${{ secrets.DOCKER_USERNAME }}
+        registry_password: ${{ secrets.DOCKER_PASSWORD }}

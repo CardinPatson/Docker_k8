@@ -1,0 +1,30 @@
+name: multi-server
+
+on: 
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+    paths:
+    - multicontainer-k8s/server
+    - .github/workflows/multi-server.yml
+
+env:
+  SERVICE: server
+  IMAGE: multi-server
+
+jobs:
+  BuildPushLinux:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    - uses: ./.github/workflows/composite
+      with:
+        service: ${{ env.SERVICE }}
+        image_name: ${{ env.IMAGE }}
+        registry_host: ${{ secrets.REGISTRY_HOST }}
+        registry_endpoint: ${{ secrets.DOCKER_REGISTRY }} #
+        registry_username: ${{ secrets.DOCKER_USERNAME }}
+        registry_password: ${{ secrets.DOCKER_PASSWORD }}
+        
