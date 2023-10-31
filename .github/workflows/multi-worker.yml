@@ -9,6 +9,7 @@ on:
     paths:
     - multicontainer-k8s/worker
     - .github/workflows/multi-worker.yml
+    - .github/workflows/composite/action.yml
 
 env:
   SERVICE: worker

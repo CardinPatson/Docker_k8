@@ -8,6 +8,7 @@ on:
     paths:
     - multicontainer-k8s/client
     - .github/workflows/multi-client.yml
+    - .github/workflows/composite/action.yml
 
 env:
   SERVICE: client

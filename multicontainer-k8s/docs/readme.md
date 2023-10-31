@@ -220,3 +220,66 @@ la commande
 `helm upgrade --install ingress-nginx ingress-nginx --repo https://kubernetes.github.io/ingress-nginx --namespace ingress-nginx --create-namespace`
 
 ## Déploiment sur le cloud
+
+
+### sur la console de ton cluster
+
+- gcloud config set project <project-id>
+
+- gcloud config set compute/zone <cluster-zone>
+
+- gcloud container clusters get-credentials <cluster-name >
+
+### pour définir les variables d'environnment
+
+- kubectl create secret generic pgpassword --from-litteral <KEY>=<VALUE>
+
+dans la console de google cloud pour installer le controlleur ingress 
+
+```bash
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+chmod 700 get_helm.sh
+./get_helm.sh
+
+helm upgrade --install ingress-nginx ingress-nginx \
+  --repo https://kubernetes.github.io/ingress-nginx \
+  --namespace ingress-nginx --create-namespace
+
+kubectl get service ingress-nginx-controller --namespace=ingress-nginx
+```
+--- 
+Venant de la documentation : https://kubernetes.github.io/ingress-nginx/deploy/#gce-gke
+```bash
+kubectl create clusterrolebinding cluster-admin-binding \
+  --clusterrole cluster-admin \
+  --user $(gcloud config get-value account)
+
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.8.2/deploy/static/provider/cloud/deploy.yaml
+```
+Terminology
+- User Account
+- Service Account
+- CLusterRoleBinding : Authorize an account to do a set of actions accross the cluster
+- RoleBinding:  to a set of actions in a single namespace 
+
+### Sécurité RBAC de kubernetes (Optionel) : Dans HELMV3 l'utilisation de tiller est optionnel
+
+On crée un nouveau compte de service nommé tiller
+
+```bash
+kubectl create service account --namespace kube-system tiller
+```
+
+On crée un nouveau clusterrolebinding avec le role cluster-admin et on l'assigne au compte de service tiller
+
+```bash
+kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
+```
+
+Avant de créer le controller ingress nginx, initialiser helm avec le compte de service tiller
+
+```bash
+helm init -- service-account tiller --upgrade
+```
+
+-- Set up maintenant le controlleur ingress nginx a l'aide de helm 
