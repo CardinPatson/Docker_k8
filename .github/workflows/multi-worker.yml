@@ -2,9 +2,9 @@ name: multi-worker
 
 on:
   workflow_dispatch:
-    push:
-      branches:
-      - master
+  push:
+    branches:
+    - master
 
     paths:
     - multicontainer-k8s/worker
