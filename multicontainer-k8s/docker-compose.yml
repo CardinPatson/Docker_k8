@@ -1,14 +1,14 @@
 version: '3'
 services:
   client:
-    image: ${REGISTRY-cardin21}/multi-client:${PLATFORM:-linux}-${TAG:-latest}
+    image: ${REGISTRY:-cardin21}/multi-client:${PLATFORM:-linux}-${TAG:-latest}
     build:
       context: ./client
       dockerfile: Dockerfile
     mem_limit: 128m
     hostname: client
   server:
-    image: ${REGISTRY-cardin21}/multi-server:${PLATFORM:-linux}-${TAG:-latest}
+    image: ${REGISTRY:-cardin21}/multi-server:${PLATFORM:-linux}-${TAG:-latest}
     build:
       context: ./server
     mem_limit: 128m
@@ -22,7 +22,7 @@ services:
       - PGPASSWORD=$PGPASSWORD
       - PGPORT=$PGPORT
   worker:
-    image: ${REGISTRY-cardin21}/multi-worker:${PLATFORM:-linux}-${TAG:-latest}
+    image: ${REGISTRY:-cardin21}/multi-worker:${PLATFORM:-linux}-${TAG:-latest}
     build: 
       context: ./worker
     mem_limit: 128m

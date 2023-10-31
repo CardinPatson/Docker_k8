@@ -39,7 +39,7 @@ runs:
     run: sudo -E docker-compose build ${{ inputs.service }}
     working-directory: ./multicontainer-k8s
     env:
-      TAG: master
+      TAG: latest
       REGISTRY: ${{ inputs.registry_endpoints }}
   
   - name: Compose push ${{ inputs.service }}
@@ -47,11 +47,11 @@ runs:
     run: sudo -E docker-compose push ${{ inputs.service }}
     working-directory: ./multicontainer-k8s
     env:
-      TAG: master
+      TAG: latest
       REGISTRY: ${{ inputs.registry_endpoint }}
   
   - name: Create multiarch manifest
     shell: bash 
     run: |
-      docker --config ~/.docker manifest create ${{ inputs.registry_endpoint }}/${{ inputs.image_name }}:master ${{ inputs.registry_endpoint }}/${{ inputs.image_name }}:linux-master
-      docker --config ~/.docker manifest push ${{ inputs.registry_endpoint }}/${{ inputs.image_name }}:master
+      docker --config ~/.docker manifest create ${{ inputs.registry_endpoint }}/${{ inputs.image_name }}:latest ${{ inputs.registry_endpoint }}/${{ inputs.image_name }}:linux-latest
+      docker --config ~/.docker manifest push ${{ inputs.registry_endpoint }}/${{ inputs.image_name }}:latest
