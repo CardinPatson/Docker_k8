@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: server
-          image: rallycoding/multi-server
+          image: cardin21/multi-server:latest
           resources:
             limits:
               memory: "128Mi"

@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: client
-          image: rallycoding/multi-client
+          image: cardin21/multi-client:latest
           resources:
             limits:
               memory: "128Mi"
