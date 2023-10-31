@@ -64,6 +64,7 @@ runs:
     env:
       TAG: ${{ env.SHA }}
       REGISTRY: ${{ inputs.registry_endpoint }}
+      
   - name: Compose push latest ${{ inputs.service }}
     shell: bash
     run: sudo -E docker-compose push ${{ inputs.service }}

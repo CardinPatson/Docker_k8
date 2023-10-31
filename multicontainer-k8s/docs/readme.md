@@ -283,3 +283,7 @@ helm init -- service-account tiller --upgrade
 ```
 
 -- Set up maintenant le controlleur ingress nginx a l'aide de helm 
+
+Dans la partie service de réseau tu peux voir le load balancer qui se trouve pour pouvoir atteindre l'ingress 
+
+Le traffic arrive d'abord sur le load balancer service qui lui va toucher le controlleur ingress nginx
